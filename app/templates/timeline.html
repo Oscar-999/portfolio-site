@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="timeline-container">
+    <h1>{{ title }}</h1>
+
+    <!-- Form to submit new timeline post -->
+    <form id="timeline-form">
+        <label for="name">Name:</label><br />
+        <input type="text" id="name" name="name" required /><br /><br />
+
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" required /><br /><br />
+
+        <label for="content">Content:</label><br />
+        <textarea id="content" name="content" rows="4" cols="50" required></textarea><br /><br />
+
+        <button type="submit">Post</button>
+    </form>
+
+    <!-- Display timeline posts -->
+    <div class="timeline-posts">
+        {% for post in timeline_posts %}
+        <div class="timeline-post">
+            <h3>{{ post.name }}</h3>
+            <p><strong>{{ post.email }}</strong></p>
+            <p>{{ post.content }}</p>
+            <p>{{ post.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            <img src="https://www.gravatar.com/avatar/{{ post.email|md5 }}?s=200&d=identicon" alt="Profile Image">
+            <hr>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='./js/timeline.js') }}"></script>
+{% endblock %}

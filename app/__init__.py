@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from peewee import *
 from datetime import datetime
 from playhouse.shortcuts import model_to_dict
+from hashlib import md5
 
 load_dotenv()
 app = Flask(__name__)
@@ -27,12 +28,28 @@ mydb.create_tables([TimelinePost])
 
 pages = [
     {'name': 'Home', 'endpoint': 'index'},
+    {'name': 'Timeline', 'endpoint': 'timeline'},
     {'name': 'Hobbies', 'endpoint': 'hobbies'}
 ]
 
 @app.route('/')
 def index():
     return render_template('index.html', title="MLH Fellow", url=os.getenv("URL"))
+
+app.route('/')
+
+@app.route('/timeline')
+def timeline():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        content = request.form['content']
+        timeline_post = TimelinePost.create(name=name, email=email, content=content)
+        return model_to_dict(timeline_post)
+    else:
+        timeline_posts = TimelinePost.select().order_by(TimelinePost.created_at.desc())
+        return render_template('timeline.html', title="Timeline", timeline_posts=timeline_posts, pages=pages)
+
 
 @app.route('/hobbies')
 def hobbies():
@@ -70,6 +87,7 @@ def delete_post(id):
     timeline_post.delete_instance()
     return jsonify({'status': 'success', 'message': 'Post deleted successfully.'})
 
+app.jinja_env.filters['md5'] = lambda x: md5(x.encode('utf-8')).hexdigest()
 
 @app.context_processor
 def inject_pages():

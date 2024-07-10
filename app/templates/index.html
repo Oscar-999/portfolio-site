@@ -30,6 +30,7 @@
         {% include 'navbar.html' %}
       </div>
     </header>
+    {% block content %}
 
     <div class="profile">
       <div id="profile-picture" class="profile-picture">
@@ -38,7 +39,6 @@
       <h1>{{ title }}</h1>
     </div>
 
-    {% block content %}
       <div class="about">
         <h2>About Me</h2>
         <p>
