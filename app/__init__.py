@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request
 from dotenv import load_dotenv
 from peewee import *
 from datetime import datetime
@@ -63,6 +63,13 @@ def get_time_line_post():
             for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
         ]
     }
+
+@app.route('/api/timeline_post/<int:id>', methods=['DELETE'])
+def delete_post(id):
+    timeline_post = TimelinePost.get(TimelinePost.id == id)
+    timeline_post.delete_instance()
+    return jsonify({'status': 'success', 'message': 'Post deleted successfully.'})
+
 
 @app.context_processor
 def inject_pages():
