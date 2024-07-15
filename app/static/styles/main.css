@@ -179,13 +179,13 @@ body {
   margin-top: 0;
 }
 
-.custom-navbar-container {
+/* .custom-navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-}
+} */
 
 .custom-navbar-logo img {
   height: 40px;

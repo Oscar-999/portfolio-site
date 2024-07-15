@@ -1,14 +1,14 @@
 <div class="custom-navbar">
-    <div class="custom-navbar-container">
-        <a href="/" class="custom-navbar-logo">
-            <img src="./static/img/logo.svg" alt="Logo" />
-        </a>
-        <div class="custom-navbar-menu">
-            {% for page in pages %}
-                <div class="custom-navbar-item">
-                    <a href="{{ url_for(page.endpoint) }}" class="custom-navbar-link">{{ page.name }}</a>
-                </div>
-            {% endfor %}
-        </div>
+  <a href="/" class="custom-navbar-logo">
+    <img src="./static/img/logo.svg" alt="Logo" />
+  </a>
+  <div class="custom-navbar-menu">
+    {% for page in pages %}
+    <div class="custom-navbar-item">
+      <a href="{{ url_for(page.endpoint) }}" class="custom-navbar-link"
+        >{{ page.name }}</a
+      >
     </div>
+    {% endfor %}
+  </div>
 </div>
