@@ -1,9 +1,13 @@
-<div class="custom-navbar">
-    <div>
-        <a href="/">
-            <img src="../static/img/logo.svg" alt="" class="size logo custom-navbar-logo">
-        </a>
-    </div>
+<!-- <div class="custom-navbar">
+  <div>
+    <a href="/">
+      <img
+        src="../static/img/logo.svg"
+        alt=""
+        class="size logo custom-navbar-logo"
+      />
+    </a>
+  </div>
   <div class="custom-navbar-menu">
     {% for page in pages %}
     <div class="custom-navbar-item">
@@ -12,5 +16,38 @@
       >
     </div>
     {% endfor %}
-  </div>
+  </div> -->
+
+  <nav id="desktop-nav">
+    <img src="../static/img/logo.svg" alt="" class="logo size">
+    <ul class="nav-links">
+      {% for page in pages %}
+    <li>
+      <a href="{{ url_for(page.endpoint) }}"
+        >{{ page.name }}</a
+      >
+    </li>
+    {% endfor %}
+    </ul>
+
+  </nav>
+  <nav id="hamburger-nav">
+    <img src="../static/img/logo.svg" alt="" class="logo size">
+    <div class="hamburger-menu">
+      <div class="hamburger-icon" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="menu-links">
+            {% for page in pages %}
+            <li>
+                <a href="{{ url_for(page.endpoint) }}" onclick="toggleMenu()">{{ page.name }}</a>
+              >
+            </li>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  <script src="{{ url_for('static', filename='./js/open.js') }}"></script>
 </div>
