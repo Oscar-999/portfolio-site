@@ -20,7 +20,7 @@ else:
         host=os.getenv("MYSQL_HOST"),
         port=3306
     )
-    
+
 class TimelinePost(Model):
     name = CharField()
     email = CharField()
@@ -76,7 +76,22 @@ def post_time_line_post():
     name = request.form['name']
     email = request.form['email']
     content = request.form['content']
+    errors = {}
+
+    if not name:
+        errors['name'] = 'Invalid name missing name'
+    if not content:
+        errors['content'] = 'Invalid content or none '
+    if not email or "@" not in email or "." not in email:
+        errors['email'] = 'Invalid email format'
+
+    if errors:
+        print(errors)
+        return jsonify(errors), 400
+
+    print("creating timeline post")
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
+
     return model_to_dict(timeline_post)
 
 @app.route('/api/timeline_post', methods=['GET'])
