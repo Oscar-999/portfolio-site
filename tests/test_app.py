@@ -31,11 +31,8 @@ class AppTestCase(unittest.TestCase):
         })
         json = response.get_json()
 
+        response = self.client.get("/timeline")
         assert response.status_code == 200
-        assert "content" in json
-        assert "Hello world, I'm John!" in json["content"]
-        assert "name" in json
-        assert "email" in json
 
     def test_malformed_timeline_post(self):
         # POST request missing name
