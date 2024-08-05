@@ -19,13 +19,17 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8' # Change to your desired Python version
+          python-version: '3.8' # Change to a supported Python version
 
       - name: Setup Python Virtual Environment
         run: python -m venv python3-virtualenv
 
       - name: Install Dependencies
-        run: python-virtualenv/bin/pip install -r requirements.txt
+        run: |
+          source python3-virtualenv/bin/activate
+          pip install -r requirements.txt
 
       - name: Run Tests
-        run: ./run_test.sh
+        run: |
+          source python3-virtualenv/bin/activate
+          ./run_test.sh
